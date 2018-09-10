@@ -286,6 +286,7 @@ uint8_t ADS1256_ReadChipID(void)
 {
 	uint8_t id;
 	id = ADS1256_ReadReg(REG_STATUS);
+	printf("read chip %d", id);
 	return (id >> 4);
 }
 
@@ -525,7 +526,7 @@ int ADC_DAC_Init(int *id, ADS1256_GAIN_E aGain, ADS1256_DRATE_E aDrate)
 		return -2;
 	}
 
-	bcm2835_spi_setBitOrder(BCM2835_SPI_BIT_ORDER_LSBFIRST);	 // The default
+	bcm2835_spi_setBitOrder(BCM2835_SPI_BIT_ORDER_MSBFIRST);	 //Since bcm2835 V1.56
 	bcm2835_spi_setDataMode(BCM2835_SPI_MODE1);					 // The default
 	bcm2835_spi_setClockDivider(BCM2835_SPI_CLOCK_DIVIDER_1024); // The default
 
