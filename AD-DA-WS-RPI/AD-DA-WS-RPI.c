@@ -286,7 +286,6 @@ uint8_t ADS1256_ReadChipID(void)
 {
 	uint8_t id;
 	id = ADS1256_ReadReg(REG_STATUS);
-	printf("read chip %d", id);
 	return (id >> 4);
 }
 
