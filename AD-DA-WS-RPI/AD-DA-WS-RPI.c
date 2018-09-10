@@ -546,7 +546,7 @@ int ADC_DAC_Init(int *id, ADS1256_GAIN_E aGain, ADS1256_DRATE_E aDrate)
 
 	if (*id != 3)
 	{
-		printf("In ADS1256_Init, Error, ASD1256 Chip ID = 0x%d\r\n", (int)id);
+		printf("In ADS1256_Init, Error, ASD1256 Chip ID = 0x%d\r\n which is != 3", (int)(*id));
 		return -3;
 	}
 
