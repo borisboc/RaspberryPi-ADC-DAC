@@ -270,18 +270,18 @@ bool DRDYIsLow();
 bool DRDYIsHigh();
 int ADS1256_WaitDRDY_LOW();
 int ADS1256_WaitDRDY_HIGH();
-static void ADS1256_Send8Bit(uint8_t _data);
+void ADS1256_Send8Bit(uint8_t _data);
 int ADS1256_ConfigureADC(ADS1256_GAIN_E _gain, ADS1256_DRATE_E _drate);
-static void ADS1256_DelayDATA(void);
-static uint8_t ADS1256_Receive8Bit(void);
-static void ADS1256_WriteReg(uint8_t _RegID, uint8_t _RegValue);
-static uint8_t ADS1256_ReadReg(uint8_t _RegID);
-static void ADS1256_WriteCmd(uint8_t _cmd);
+void ADS1256_DelayDATA(void);
+uint8_t ADS1256_Receive8Bit(void);
+void ADS1256_WriteReg(uint8_t _RegID, uint8_t _RegValue);
+uint8_t ADS1256_ReadReg(uint8_t _RegID);
+void ADS1256_WriteCmd(uint8_t _cmd);
 uint8_t ADS1256_ReadChipID(void);
-static void ADS1256_SetChannel(uint8_t _ch);
-static void ADS1256_SetDiffChannel(uint8_t _ch);
-static int32_t ADS1256_ReadData(void);
-static uint8_t ADS1256_RemapChannelIndex(uint8_t ch);
+void ADS1256_SetChannel(uint8_t _ch);
+void ADS1256_SetDiffChannel(uint8_t _ch);
+int32_t ADS1256_ReadData(void);
+uint8_t ADS1256_RemapChannelIndex(uint8_t ch);
 
 int ADS1256_ReadAdcValues(uint8_t **Channels, int NbChannels, ADS1256_SCAN_MODE mode, int32_t **AdcVals);
 

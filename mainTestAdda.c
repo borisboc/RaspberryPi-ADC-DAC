@@ -31,6 +31,7 @@ int main()
 		printf("bcm init failed with code %d", initBcm);
 		return -55;
 	}
+	printf("BCM 2835 initialized");
 
 	//Prepare an array with the 8 single ended inputs to read [0,1,2,3,4,5,6,7]
 	int NbChannels = 8;

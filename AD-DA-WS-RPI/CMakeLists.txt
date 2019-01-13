@@ -4,6 +4,8 @@ project(ADDA_WS_RPI)
 #message("current dir")
 #message(${CMAKE_CURRENT_SOURCE_DIR})
 
+SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Werror")
+
 list(APPEND CMAKE_MODULE_PATH 
     ${CMAKE_CURRENT_SOURCE_DIR}/cmake
 )

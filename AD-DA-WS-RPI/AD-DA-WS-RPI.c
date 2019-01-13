@@ -95,7 +95,7 @@ int WaitCondition(bool (*f)())
  * 
  * @param _data : what to send
  */
-static void ADS1256_Send8Bit(uint8_t _data)
+void ADS1256_Send8Bit(uint8_t _data)
 {
 	bsp_DelayUS(2);
 	bcm2835_spi_transfer(_data);
@@ -206,7 +206,7 @@ int ADS1256_ConfigureADC(ADS1256_GAIN_E _gain, ADS1256_DRATE_E _drate)
  * it represents 50 x the clock period.
  * 
  */
-static void ADS1256_DelayDATA(void)
+void ADS1256_DelayDATA(void)
 {
 	/*
 		Delay from last SCLK edge for DIN to first SCLK rising edge for DOUT: RDATA, RDATAC,RREG Commands
@@ -220,7 +220,7 @@ static void ADS1256_DelayDATA(void)
  * 
  * @return uint8_t : the received bits.
  */
-static uint8_t ADS1256_Receive8Bit(void)
+uint8_t ADS1256_Receive8Bit(void)
 {
 	uint8_t read = 0;
 	read = bcm2835_spi_transfer(0xff);
@@ -233,7 +233,7 @@ static uint8_t ADS1256_Receive8Bit(void)
  * @param _RegID : register ID.
  * @param _RegValue : register value to be written.
  */
-static void ADS1256_WriteReg(uint8_t _RegID, uint8_t _RegValue)
+void ADS1256_WriteReg(uint8_t _RegID, uint8_t _RegValue)
 {
 	CS_ADC_0();							 /* SPI  cs  = 0 */
 	ADS1256_Send8Bit(CMD_WREG | _RegID); /*Write command register */
@@ -249,7 +249,7 @@ static void ADS1256_WriteReg(uint8_t _RegID, uint8_t _RegValue)
  * @param _RegID : register ID.
  * @return uint8_t : read value in the register.
  */
-static uint8_t ADS1256_ReadReg(uint8_t _RegID)
+uint8_t ADS1256_ReadReg(uint8_t _RegID)
 {
 	uint8_t read;
 
@@ -270,7 +270,7 @@ static uint8_t ADS1256_ReadReg(uint8_t _RegID)
  * 
  * @param _cmd : command to send.
  */
-static void ADS1256_WriteCmd(uint8_t _cmd)
+void ADS1256_WriteCmd(uint8_t _cmd)
 {
 	CS_ADC_0(); /* SPI   cs = 0 */
 	ADS1256_Send8Bit(_cmd);
@@ -295,7 +295,7 @@ uint8_t ADS1256_ReadChipID(void)
  * 
  * @param channel : The channel to read the value on.
  */
-static void ADS1256_SetChannel(uint8_t channel)
+void ADS1256_SetChannel(uint8_t channel)
 {
 	/*
 	Bits 7-4 PSEL3, PSEL2, PSEL1, PSEL0: Positive Input Channel (AINP) Select
@@ -337,7 +337,7 @@ static void ADS1256_SetChannel(uint8_t channel)
  * 
  * @param channel : The channel to read the value on.
  */
-static void ADS1256_SetDiffChannel(uint8_t channel)
+void ADS1256_SetDiffChannel(uint8_t channel)
 {
 	/*
 	Bits 7-4 PSEL3, PSEL2, PSEL1, PSEL0: Positive Input Channel (AINP) Select
@@ -390,7 +390,7 @@ static void ADS1256_SetDiffChannel(uint8_t channel)
  * 
  * @return int32_t : the ADC value.
  */
-static int32_t ADS1256_ReadData(void)
+int32_t ADS1256_ReadData(void)
 {
 	uint32_t read = 0;
 	static uint8_t buf[3];
@@ -475,7 +475,7 @@ int ADS1256_ReadAdcValues(uint8_t **Channels, int NbChannels, ADS1256_SCAN_MODE 
  * @param ch The channel you wired your signal to 
  * @return uint8_t The remapped channel to compensate the wiring / code error.
  */
-static uint8_t ADS1256_RemapChannelIndex(uint8_t ch)
+uint8_t ADS1256_RemapChannelIndex(uint8_t ch)
 {
 	switch (ch)
 	{
@@ -623,8 +623,6 @@ int ADC_DAC_Close()
  */
 void DAC8552_Write(uint8_t channel, uint16_t Data)
 {
-	uint8_t i;
-
 	CS_DAC_1();
 	CS_DAC_0();
 	bcm2835_spi_transfer(channel);
