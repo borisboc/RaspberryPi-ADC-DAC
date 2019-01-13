@@ -286,7 +286,6 @@ uint8_t ADS1256_ReadChipID(void)
 {
 	uint8_t id;
 	id = ADS1256_ReadReg(REG_STATUS);
-	printf("read chip %d", id);
 	return (id >> 4);
 }
 
@@ -487,6 +486,8 @@ uint8_t ADS1256_RemapChannelIndex(uint8_t ch)
 		return 3;
 	case 3:
 		return 4;
+	case 4:
+		return 5;			
 	case 5:
 		return 6;
 	case 6:

@@ -19,7 +19,7 @@ sudo make check
 sudo make install
 ```
 
-Remarks : tested with version 1.55. It looks like it is not compiling with versions < 1.50 because bcm2835_spi_begin() changed its signature. 
+Remarks : tested with version 1.55 and 1.56 (since commit 45ded505c7f1468286e85d9065cf5b9fef636db7, prior commit will not work with versions >=1.56). It looks like it is not compiling with versions < 1.50 because bcm2835_spi_begin() changed its signature. 
 
 
 ### RaspberryPi-ADC-DAC
