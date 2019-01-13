@@ -77,4 +77,10 @@ In console, current 8 AD input values will be displayed. Also, input value on AD
 * Write to outputs (DAC0 or DAC1, i.e. Channel_A or Channel_B) by calling `DAC8552_Write` .
 * Close / stop the circuits and the communication by calling `ADC_DAC_Close`.
 
+## Code quality
 
+I try to do my best to provide code with a certain level of quality even though C is not my main language. The code is commented and documented. There are some very strict compilation flags, forcing to have zero compiler warnings (at least tried on gcc). I also perform regular cppcheck. But of course all your proposals and pull requests are welcome !
+
+## Donations
+
+This work is definitly NOT to make money on it. My motivations are to provide easy and performant codes for this hat/shield. Of course you may show your enthusiasm by giving a small donation => [![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://paypal.me/borisBocquet?locale.x=fr_FR) 
