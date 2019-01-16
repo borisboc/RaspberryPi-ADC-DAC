@@ -12,7 +12,9 @@ list(APPEND CMAKE_MODULE_PATH
 
 find_package (bcm2835 REQUIRED ${CMAKE_MODULE_PATH})
 
-add_library(ADDA_WS_RPI AD-DA-WS-RPI.c)
+#add_library(ADDA_WS_RPI AD-DA-WS-RPI.c AD-DA-BCM.c AD-DA-MOCKSPI.c)
+#add_library(ADDA_WS_RPI AD-DA-WS-RPI.c AD-DA-MOCKSPI.c)
+add_library(ADDA_WS_RPI AD-DA-WS-RPI.c AD-DA-BCM.c)
 
 include_directories(${BCM2835_INCLUDE_DIRS})
 target_link_libraries (ADDA_WS_RPI ${BCM2835_LIBRARIES})
