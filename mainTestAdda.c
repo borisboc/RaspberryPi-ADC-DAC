@@ -25,13 +25,13 @@ int main()
 {
 	printf("Starting Test ADDA\r\n");
 
-	int initBcm = bcm2835_init();
-	if (initBcm != 1)
+	int initSpi = spi_init();
+        if (initSpi != 1)
 	{
-		printf("bcm init failed with code %d", initBcm);
+		printf("SPI init failed with code %d\r\n", initSpi);
 		return -55;
 	}
-	printf("BCM 2835 initialized");
+	printf("SPI initialized\r\n");
 
 	//Prepare an array with the 8 single ended inputs to read [0,1,2,3,4,5,6,7]
 	int NbChannels = 8;

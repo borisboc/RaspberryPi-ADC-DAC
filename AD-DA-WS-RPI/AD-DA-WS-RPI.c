@@ -22,7 +22,7 @@
  */
 void bsp_DelayUS(uint64_t micros)
 {
-	bcm2835_delayMicroseconds(micros);
+	spi_delay_us(micros);
 }
 
 /**
@@ -84,7 +84,7 @@ int WaitCondition(bool (*f)())
 		if ((*f)())
 			return 0;
 
-		bcm2835_delayMicroseconds(1);
+		bsp_DelayUS(1);
 	}
 
 	return -1;
@@ -98,7 +98,7 @@ int WaitCondition(bool (*f)())
 void ADS1256_Send8Bit(uint8_t _data)
 {
 	bsp_DelayUS(2);
-	bcm2835_spi_transfer(_data);
+	spi_transfer(_data);
 }
 
 /**
@@ -223,7 +223,7 @@ void ADS1256_DelayDATA(void)
 uint8_t ADS1256_Receive8Bit(void)
 {
 	uint8_t read = 0;
-	read = bcm2835_spi_transfer(0xff);
+	read = spi_transfer(0xff);
 	return read;
 }
 
@@ -409,7 +409,7 @@ int32_t ADS1256_ReadData(void)
 	read |= ((uint32_t)buf[1] << 8); /* Pay attention to It is wrong   read |= (buf[1] << 8) */
 	read |= buf[2];
 
-	CS_ADC_1(); /* SPIÆ¬Ñ¡ = 1 */
+	CS_ADC_1();
 
 	/* Extend a signed number*/
 	if (read & 0x800000)
@@ -426,7 +426,7 @@ int32_t ADS1256_ReadData(void)
  * @param Channels : Pass an array whith all channels values you want to read. e.g. [0,1,2,3].
  * @param NbChannels : The size of array Channels.
  * @param mode : Scan mode of the inputs (single ended or differential).
- * @param AdcVals : Current read values of each channel.
+ * @param AdcVals : Current read values of each channel. Do not forget to free this array (there is a memory allocation in this function).
  * @return 0 : no error. 
  * @return -1 : ADS1256_WaitDRDY_LOW failed.
  */
@@ -506,43 +506,35 @@ uint8_t ADS1256_RemapChannelIndex(uint8_t ch)
  * @param aGain : Channel gain. @sa ADS1256_ConfigureADC.
  * @param aDrate : Data rate. @sa ADS1256_ConfigureADC.
  * @return 0 : sucess.
- * @return -1 : bcm2835_init failed.
- * @return -2 : bcm2835_spi_begin failed.
+ * @return -1 : spi_init failed.
+ * @return -2 : spi_begin failed.
  * @return -3 : ADS1256_ReadChipID failed (id should be == 3).
+  *@return -4 : spi_init_adc_dac_board failed.
  */
 int ADC_DAC_Init(int *id, ADS1256_GAIN_E aGain, ADS1256_DRATE_E aDrate)
 {
-	int initBcm = bcm2835_init();
+	int initBcm = spi_init();
 	if (initBcm != 1)
 	{
-		printf("In ADS1256_Init, bcm2835_init returned %d\r\n", initBcm);
+		printf("In ADS1256_Init, spi_init returned %d\r\n", initBcm);
 		return -1;
 	}
 
-	int spiBegin = bcm2835_spi_begin();
+	int spiBegin = spi_begin();
 
 	if (spiBegin != 1)
 	{
-		printf("In ADS1256_Init, bcm2835_spi_begin returned %d\r\n", spiBegin);
+		printf("In ADS1256_Init, spi_begin returned %d\r\n", spiBegin);
 		return -2;
 	}
 
-	bcm2835_spi_setBitOrder(BCM2835_SPI_BIT_ORDER_MSBFIRST);	 //Since bcm2835 V1.56
-	bcm2835_spi_setDataMode(BCM2835_SPI_MODE1);					 // The default
-	bcm2835_spi_setClockDivider(BCM2835_SPI_CLOCK_DIVIDER_1024); // The default
+	int spiPrepare = spi_init_adc_dac_board();
 
-	//ADS1256
-	bcm2835_gpio_fsel(SPI_CS_ADC1256, BCM2835_GPIO_FSEL_OUTP);
-	bcm2835_gpio_write(SPI_CS_ADC1256, HIGH);
-	bcm2835_gpio_fsel(DRDY, BCM2835_GPIO_FSEL_INPT);
-	bcm2835_gpio_set_pud(DRDY, BCM2835_GPIO_PUD_UP);
-
-	//DAC8552
-	bcm2835_gpio_fsel(SPI_CS_DAC8552, BCM2835_GPIO_FSEL_OUTP);
-	bcm2835_gpio_write(SPI_CS_DAC8552, HIGH);
-
-	//ADS1256_WriteReg(REG_MUX,0x01);
-	//ADS1256_WriteReg(REG_ADCON,0x20);
+	if (spiPrepare != 1)
+	{
+		printf("In ADS1256_Init, spi_init_adc_dac_board returned %d\r\n", spiBegin);
+		return -4;
+	}	
 
 	*id = ADS1256_ReadChipID();
 
@@ -596,7 +588,7 @@ double *ADS1256_AdcArrayToMicroVolts(int32_t *adcValue, int NbVals, double scali
  * @brief STANDBY the ADS1256 and close SPI communication.
  * 
  * @return 0 : no error.
- * @return -1 : bcm2835_close failed.
+ * @return -1 : spi_close failed.
  */
 int ADC_DAC_Close()
 {
@@ -604,12 +596,12 @@ int ADC_DAC_Close()
 	ADS1256_WriteCmd(CMD_STANDBY);
 	bsp_DelayUS(25);
 
-	bcm2835_spi_end();
-	int closingBcm = bcm2835_close();
+	spi_end();
+	int closingBcm = spi_close();
 
 	if (closingBcm != 1)
 	{
-		printf("In ADS1256_Close, bcm2835_close returned %d\r\n", closingBcm);
+		printf("In ADS1256_Close, spi_close returned %d\r\n", closingBcm);
 		return -1;
 	}
 
@@ -626,9 +618,9 @@ void DAC8552_Write(uint8_t channel, uint16_t Data)
 {
 	CS_DAC_1();
 	CS_DAC_0();
-	bcm2835_spi_transfer(channel);
-	bcm2835_spi_transfer((Data >> 8));
-	bcm2835_spi_transfer((Data & 0xff));
+	spi_transfer(channel);
+	spi_transfer((Data >> 8));
+	spi_transfer((Data & 0xff));
 	CS_DAC_1();
 }
 

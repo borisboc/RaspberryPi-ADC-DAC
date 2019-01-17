@@ -39,59 +39,38 @@ RPI_V2_GPIO_P1_13->RPI_GPIO_P1_13
 #ifndef AD_DA_WS_RPI_H_
 #define AD_DA_WS_RPI_H_
 
-#include <bcm2835.h>
 #include <stdio.h>
-#include <unistd.h>
 #include <string.h>
 #include <math.h>
 #include <errno.h>
 #include <stdlib.h>
 
-//CS      -----   SPI_CS_ADC1256
-//DIN     -----   MOSI
-//DOUT  -----   MISO
-//SCLK   -----   SCLK
-//DRDY  -----   ctl_IO     data  starting
-//RST     -----   ctl_IO     reset
+#include "AD-DA-TYPES.h"
 
-#define DRDY RPI_GPIO_P1_11			  //P0
-#define RST RPI_GPIO_P1_12			  //P1
-#define SPI_CS_ADC1256 RPI_GPIO_P1_15 //P3   ads1256  cs
-#define SPI_CS_DAC8552 RPI_GPIO_P1_16 //P4   DAC8552 CS
+//Abstractions
+#include "AD-DA-RPI.h"
+#include "AD-DA-SPI.h"
 
-#define CS_ADC_1() bcm2835_gpio_write(SPI_CS_ADC1256, HIGH)
-#define CS_ADC_0() bcm2835_gpio_write(SPI_CS_ADC1256, LOW)
+//#ifndef ADDA_WS_RPI_MOCK_SPI
+//#define ADDA_WS_RPI_MOCK_SPI
+//#endif //ADDA_WS_RPI_MOCK_SPI
 
-#define CS_DAC_1() bcm2835_gpio_write(SPI_CS_DAC8552, HIGH)
-#define CS_DAC_0() bcm2835_gpio_write(SPI_CS_DAC8552, LOW)
+//#ifndef ADDA_WS_RPI_USE_BCM_SPI
+//#define ADDA_WS_RPI_USE_BCM_SPI
+//#endif //ADDA_WS_RPI_USE_BCM_SPI
 
-#define DRDY_IS_LOW() ((bcm2835_gpio_lev(DRDY) == 0))
+#ifdef ADDA_WS_RPI_MOCK_SPI
+	#include "AD-DA-MOCKSPI.h"
+#else
 
-#define RST_1() bcm2835_gpio_write(RST, HIGH);
-#define RST_0() bcm2835_gpio_write(RST, LOW);
+	#ifdef ADDA_WS_RPI_USE_BCM_SPI
+		#include "AD-DA-BCM.h"
+	#else
 
-/* Unsigned integer types  */
-#define uint8_t unsigned char
-#define uint16_t unsigned short
-#define uint32_t unsigned long
+	#endif // ADDA_WS_RPI_USE_BCM_SPI
 
-/**
- * @brief Channel A for the DAC8552.
- * 
- */
-#define channel_A 0x30
+#endif // ADDA_WS_RPI_MOCK_SPI
 
-/**
- * @brief Channel B for the DAC8552.
- * 
- */
-#define channel_B 0x34
-
-typedef enum
-{
-	FALSE = 0,
-	TRUE = !FALSE
-} bool;
 
 /**
  * @brief Defined ADC gain for channels.
