@@ -51,13 +51,13 @@ RPI_V2_GPIO_P1_13->RPI_GPIO_P1_13
 #include "AD-DA-RPI.h"
 #include "AD-DA-SPI.h"
 
-#ifndef ADDA_WS_RPI_MOCK_SPI
+//#ifndef ADDA_WS_RPI_MOCK_SPI
 //#define ADDA_WS_RPI_MOCK_SPI
-#endif //ADDA_WS_RPI_MOCK_SPI
+//#endif //ADDA_WS_RPI_MOCK_SPI
 
-#ifndef ADDA_WS_RPI_USE_BCM_SPI
-#define ADDA_WS_RPI_USE_BCM_SPI
-#endif //ADDA_WS_RPI_USE_BCM_SPI
+//#ifndef ADDA_WS_RPI_USE_BCM_SPI
+//#define ADDA_WS_RPI_USE_BCM_SPI
+//#endif //ADDA_WS_RPI_USE_BCM_SPI
 
 #ifdef ADDA_WS_RPI_MOCK_SPI
 	#include "AD-DA-MOCKSPI.h"
@@ -67,7 +67,7 @@ RPI_V2_GPIO_P1_13->RPI_GPIO_P1_13
 		#include "AD-DA-BCM.h"
 	#else
 
-	#endif // USE_BCM_SPI
+	#endif // ADDA_WS_RPI_USE_BCM_SPI
 
 #endif // ADDA_WS_RPI_MOCK_SPI
 
