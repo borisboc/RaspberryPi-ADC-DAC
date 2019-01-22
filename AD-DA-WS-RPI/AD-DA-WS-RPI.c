@@ -31,7 +31,7 @@ void bsp_DelayUS(uint64_t micros)
  * @return true : /DRDY is currently low.
  * @return false : /DRDY is NOT currently low (i.e. it is high).
  */
-bool DRDYIsLow()
+bool DRDYIsLow(void)
 {
 	return DRDY_IS_LOW();
 }
@@ -42,7 +42,7 @@ bool DRDYIsLow()
  * @return true : /DRDY is currently high.
  * @return false : /DRDY is NOT currently high (i.e. it is low).
  */
-bool DRDYIsHigh()
+bool DRDYIsHigh(void)
 {
 	return !(DRDY_IS_LOW());
 }
@@ -53,7 +53,7 @@ bool DRDYIsHigh()
  * @return 0 : Wait successful.
  * @return -1 : A timeout occured. @sa WaitCondition.
  */
-int ADS1256_WaitDRDY_LOW()
+int ADS1256_WaitDRDY_LOW(void)
 {
 	return WaitCondition(DRDYIsLow);
 }
@@ -64,7 +64,7 @@ int ADS1256_WaitDRDY_LOW()
  * @return 0 : Wait successful.
  * @return -1 : A timeout occured. @sa WaitCondition.
  */
-int ADS1256_WaitDRDY_HIGH()
+int ADS1256_WaitDRDY_HIGH(void)
 {
 	return WaitCondition(DRDYIsHigh);
 }
@@ -76,7 +76,7 @@ int ADS1256_WaitDRDY_HIGH()
  * @return 0 : the function returned true (after a while).
  * @return -1 :  timeout : the function never returned true even after several microseconds.
  */
-int WaitCondition(bool (*f)())
+int WaitCondition(bool (*f)(void))
 {
 	int i;
 	for (i = 0; i < 410002; i++) //TODO find a better way. E.g. with time.h clock_gettime as you know you shall timeout if time is over CYCLING_TROUGHPUT_USEC
@@ -180,7 +180,9 @@ int ADS1256_ConfigureADC(ADS1256_GAIN_E _gain, ADS1256_DRATE_E _drate)
 				110 = 64
 				111 = 64
 		*/
-		buf[2] = (0 << 5) | (0 << 3) | (_gain << 0);
+
+		buf[2] = (0 << 5) | (0 << 3) | ((uint8_t)_gain << 0);
+
 		//ADS1256_WriteReg(REG_ADCON, (0 << 5) | (0 << 2) | (GAIN_1 << 1));	/*choose 1: gain 1 ;input 5V/
 		buf[3] = s_tabDataRate[_drate]; // e.g. DRATE_10SPS;
 
@@ -590,7 +592,7 @@ double *ADS1256_AdcArrayToMicroVolts(int32_t *adcValue, int NbVals, double scali
  * @return 0 : no error.
  * @return -1 : spi_close failed.
  */
-int ADC_DAC_Close()
+int ADC_DAC_Close(void)
 {
 	//Not 100% sure this is a good idea to call CMD_STANDBY
 	ADS1256_WriteCmd(CMD_STANDBY);

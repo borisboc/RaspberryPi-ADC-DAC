@@ -21,7 +21,7 @@
  * 
  * @return int 
  */
-int main()
+int main(void)
 {
 	printf("Starting Test ADDA\r\n");
 
@@ -38,7 +38,7 @@ int main()
 	int MainLoop = 0;
 	int RetCode = 0;
 	uint8_t *Channels = malloc(NbChannels * sizeof(uint8_t));
-	int Ch;
+	uint8_t Ch;
 	for (Ch = 0; Ch < NbChannels; Ch++)
 	{
 		*(Channels + Ch) = Ch;

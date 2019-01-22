@@ -21,30 +21,30 @@ uint8_t spi_transfer(uint8_t data)
     return r;
 }
 
-int spi_init()
+int spi_init(void)
 {
     printf("spi_init\n");
     return 1;
 }
 
-int spi_begin()
+int spi_begin(void)
 {
     printf("spi_begin\n");
     return 1;
 }
 
-int spi_init_adc_dac_board()
+int spi_init_adc_dac_board(void)
 {
     printf("spi_init_adc_dac_board\n");
     return 1;
 }
 
-void spi_end()
+void spi_end(void)
 {
     printf("spi_end\n");
 }
 
-int spi_close()
+int spi_close(void)
 {
     printf("spi_close\n");
     return 1;

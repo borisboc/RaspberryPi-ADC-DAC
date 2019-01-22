@@ -78,13 +78,13 @@ RPI_V2_GPIO_P1_13->RPI_GPIO_P1_13
  */
 typedef enum
 {
-	ADS1256_GAIN_1 = (0),  /* GAIN   1 */
-	ADS1256_GAIN_2 = (1),  /*GAIN   2 */
-	ADS1256_GAIN_4 = (2),  /*GAIN   4 */
-	ADS1256_GAIN_8 = (3),  /*GAIN   8 */
-	ADS1256_GAIN_16 = (4), /* GAIN  16 */
-	ADS1256_GAIN_32 = (5), /*GAIN    32 */
-	ADS1256_GAIN_64 = (6), /*GAIN    64 */
+	ADS1256_GAIN_1 = 0,  /* GAIN   1 */
+	ADS1256_GAIN_2 = 1,  /*GAIN   2 */
+	ADS1256_GAIN_4 = 2,  /*GAIN   4 */
+	ADS1256_GAIN_8 = 3,  /*GAIN   8 */
+	ADS1256_GAIN_16 = 4, /* GAIN  16 */
+	ADS1256_GAIN_32 = 5, /*GAIN    32 */
+	ADS1256_GAIN_64 = 6, /*GAIN    64 */
 } ADS1256_GAIN_E;
 
 /**
@@ -109,7 +109,6 @@ typedef enum
 	ADS1256_10SPS,
 	ADS1256_5SPS,
 	ADS1256_2d5SPS,
-
 	ADS1256_DRATE_MAX
 } ADS1256_DRATE_E;
 
@@ -245,10 +244,10 @@ static const uint64_t MASTER_CLOCK_PERIOD_USEC_TIMES_24 = 4; //24*0.13
  */
 static const uint64_t MASTER_CLOCK_PERIOD_USEC_TIMES_50 = 7; //50*0.13
 
-bool DRDYIsLow();
-bool DRDYIsHigh();
-int ADS1256_WaitDRDY_LOW();
-int ADS1256_WaitDRDY_HIGH();
+bool DRDYIsLow(void);
+bool DRDYIsHigh(void);
+int ADS1256_WaitDRDY_LOW(void);
+int ADS1256_WaitDRDY_HIGH(void);
 void ADS1256_Send8Bit(uint8_t _data);
 int ADS1256_ConfigureADC(ADS1256_GAIN_E _gain, ADS1256_DRATE_E _drate);
 void ADS1256_DelayDATA(void);
@@ -267,12 +266,12 @@ int ADS1256_ReadAdcValues(uint8_t **Channels, int NbChannels, ADS1256_SCAN_MODE 
 int ADC_DAC_Init(int *id, ADS1256_GAIN_E aGain, ADS1256_DRATE_E aDrate);
 double ADS1256_AdcToMicroVolts(int32_t adcValue, double scalingFactor);
 double *ADS1256_AdcArrayToMicroVolts(int32_t *adcValue, int NbVals, double scalingFactor);
-int ADC_DAC_Close();
+int ADC_DAC_Close(void);
 
 /***************************************************/
 
 void bsp_DelayUS(uint64_t micros);
-int WaitCondition(bool (*f)());
+int WaitCondition(bool (*f)(void));
 
 /***************************************************/
 void DAC8552_Write(uint8_t channel, uint16_t Data);

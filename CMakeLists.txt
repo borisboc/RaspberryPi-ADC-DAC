@@ -2,7 +2,12 @@ cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
 
 project(TestingAdda)
 
-SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra")
+SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
+
+if(WIN32)
+else()
+	SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wextra -Werror")
+endif()
 
 SET(MOCK_SPI False CACHE BOOL "On : SPI communication is mocked. Off : use real SPI lib such as BCM2835")
 SET(USE_BCM True CACHE BOOL "On :  use BCM2835 as SPI lib")

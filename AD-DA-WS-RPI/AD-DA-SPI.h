@@ -20,10 +20,10 @@
 
 void spi_delay_us(uint64_t micros);
 uint8_t spi_transfer(uint8_t data);
-int spi_init();
-int spi_begin();
-int spi_init_adc_dac_board();
-void spi_end();
-int spi_close();
+int spi_init(void);
+int spi_begin(void);
+int spi_init_adc_dac_board(void);
+void spi_end(void);
+int spi_close(void);
 
 #endif //AD_DA_SPI_H_

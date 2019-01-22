@@ -2,7 +2,12 @@ cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
 
 project(ADDA_WS_RPI)
 
-SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Werror")
+SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
+
+if(WIN32)
+else()
+	SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wextra -Werror")
+endif()
 
 list(APPEND CMAKE_MODULE_PATH 
     ${CMAKE_CURRENT_SOURCE_DIR}/cmake
