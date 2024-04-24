@@ -1,6 +1,6 @@
 /**
  * @file AD-DA-WS-RPI.h
- * @author Boris Bocquet <b.bocquet@akeoplus.com>
+ * @author Boris Bocquet <borisboc@free.fr>
  * @date May, 2018
  * @brief This work is based on provided codes by Waveshare High-Precision AD-DA raspberry pi hat/shield.
  *

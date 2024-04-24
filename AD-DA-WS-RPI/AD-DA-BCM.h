@@ -1,6 +1,6 @@
 /**
  * @file AD-DA-BCM.h
- * @author Boris Bocquet <b.bocquet@akeoplus.com>
+ * @author Boris Bocquet <borisboc@free.fr>
  * @date January, 2019
  * @brief The implementation of SPI abstraction using BCM2835 library. See http://www.airspayce.com/mikem/bcm2835/
  *

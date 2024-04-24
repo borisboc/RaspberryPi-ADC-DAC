@@ -1,6 +1,6 @@
 /**
  * @file AD-DA-RPI.h
- * @author Boris Bocquet <b.bocquet@akeoplus.com>
+ * @author Boris Bocquet <borisboc@free.fr>
  * @date January, 2019
  * @brief The implementation of Raspberry Pi abstraction.
  *

@@ -1,6 +1,6 @@
 /**
  * @file mainTestAdda.c
- * @author Boris Bocquet <b.bocquet@akeoplus.com>
+ * @author Boris Bocquet <borisboc@free.fr>
  * @date May, 2018
  * @brief Testing AD-DA-WS-RPI lib
  *

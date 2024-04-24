@@ -1,6 +1,6 @@
 /**
  * @file AD-DA-TYPES.h
- * @author Boris Bocquet <b.bocquet@akeoplus.com>
+ * @author Boris Bocquet <borisboc@free.fr>
  * @date January, 2019
  * @brief The usefull types, defines, common to all (several) files in this projet.
  *

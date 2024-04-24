@@ -1,6 +1,6 @@
 /**
  * @file AD-DA-SPI.h
- * @author Boris Bocquet <b.bocquet@akeoplus.com>
+ * @author Boris Bocquet <borisboc@free.fr>
  * @date January, 2019
  * @brief The sort of "interface" SPI abstractions must implement. See http://www.airspayce.com/mikem/bcm2835/
  *

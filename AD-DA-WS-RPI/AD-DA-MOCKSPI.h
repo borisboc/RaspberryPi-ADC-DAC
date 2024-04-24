@@ -1,6 +1,6 @@
 /**
  * @file AD-DA-MOCKSPI.h
- * @author Boris Bocquet <b.bocquet@akeoplus.com>
+ * @author Boris Bocquet <borisboc@free.fr>
  * @date January, 2019
  * @brief A mock for SPI interface. Simply prints in console.
  *
