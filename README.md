@@ -33,7 +33,7 @@ sudo apt-get install git cmake
 
 Then you can clone and build the codes of this repository : 
 ```shell
-git clone https://github.com/AKEOPLUS-boris-bocquet/RaspberryPi-ADC-DAC.git
+git clone https://github.com/borisboc/RaspberryPi-ADC-DAC.git
 cd RaspberryPi-ADC-DAC
 mkdir build
 cd build
